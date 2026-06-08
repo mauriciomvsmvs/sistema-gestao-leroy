@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cristal Sete · Sistema de Gestão | Projeto Leroy Merlin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --petrol-900:#0a2025;
+  --petrol-800:#0d2c33;
+  --petrol-700:#103a43;
+  --petrol-600:#155060;
+  --teal:#1aa3a3;
+  --teal-bright:#22c5c0;
+  --teal-soft:#d4f1ef;
+  --amber:#f2a30a;
+  --amber-soft:#fff3d6;
+  --coral:#e8573f;
+  --coral-soft:#fbe2dd;
+  --green:#1f9d6b;
+  --green-soft:#d8f3e6;
+  --ink:#0d1f24;
+  --slate:#5b7178;
+  --slate-light:#8499a0;
+  --line:#e3ecee;
+  --line-soft:#eef4f5;
+  --paper:#f6fafb;
+  --white:#ffffff;
+  --shadow-sm:0 1px 3px rgba(13,44,51,.07),0 1px 2px rgba(13,44,51,.04);
+  --shadow-md:0 4px 16px rgba(13,44,51,.08),0 2px 6px rgba(13,44,51,.05);
+  --shadow-lg:0 12px 40px rgba(13,44,51,.14),0 4px 12px rgba(13,44,51,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+h1,h2,h3,h4,h5{font-family:'Sora',sans-serif;letter-spacing:-.02em}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* ============ LOGIN ============ */
+#login{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(900px 600px at 15% 10%, rgba(34,197,192,.18), transparent 60%),
+    radial-gradient(800px 500px at 85% 90%, rgba(21,80,96,.35), transparent 55%),
+    linear-gradient(135deg,var(--petrol-900),var(--petrol-700));
+  overflow:hidden;
+}
+#login::before{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(circle at 50% 50%, black, transparent 75%);
+}
+.login-card{
+  position:relative;
+  width:min(440px,92vw);
+  background:rgba(255,255,255,.97);
+  border-radius:24px;
+  padding:44px 40px 36px;
+  box-shadow:0 30px 80px rgba(0,0,0,.4);
+  animation:rise .7s cubic-bezier(.16,1,.3,1);
+}
+@keyframes rise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+.logo-badge{
+  display:flex;align-items:center;gap:13px;margin-bottom:6px;
+}
+.logo-mark{
+  width:50px;height:50px;border-radius:14px;
+  background:linear-gradient(135deg,var(--teal),var(--petrol-600));
+  display:grid;place-items:center;flex-shrink:0;
+  box-shadow:0 8px 20px rgba(26,163,163,.4);
+  position:relative;overflow:hidden;
+}
+.logo-mark::after{content:"";position:absolute;top:-50%;left:-50%;width:60%;height:200%;background:linear-gradient(transparent,rgba(255,255,255,.4),transparent);transform:rotate(25deg)}
+.logo-mark svg{width:26px;height:26px}
+.logo-text b{font-family:'Sora';font-weight:800;font-size:21px;color:var(--ink);display:block;line-height:1}
+.logo-text span{font-size:12px;color:var(--slate);letter-spacing:.04em}
+.login-title{font-size:15px;color:var(--slate);margin:26px 0 8px;font-weight:500}
+.login-card h2{font-size:25px;color:var(--ink);margin-bottom:24px;line-height:1.2}
+.profile-opt{
+  display:flex;align-items:center;gap:16px;
+  width:100%;padding:17px 18px;margin-bottom:13px;
+  border:2px solid var(--line);border-radius:16px;
+  background:var(--white);cursor:pointer;text-align:left;
+  transition:.25s cubic-bezier(.16,1,.3,1);
+}
+.profile-opt:hover{border-color:var(--teal);transform:translateX(4px);box-shadow:var(--shadow-md)}
+.profile-opt .ic{
+  width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;
+}
+.profile-opt.c7 .ic{background:var(--teal-soft);color:var(--petrol-700)}
+.profile-opt.lm .ic{background:var(--amber-soft);color:#b8780a}
+.profile-opt .ic svg{width:24px;height:24px}
+.profile-opt b{display:block;font-family:'Sora';font-size:16px;color:var(--ink);margin-bottom:2px}
+.profile-opt small{color:var(--slate);font-size:13px;line-height:1.3}
+.profile-opt .arrow{margin-left:auto;color:var(--slate-light);transition:.25s}
+.profile-opt:hover .arrow{color:var(--teal);transform:translateX(3px)}
+.login-foot{margin-top:18px;text-align:center;font-size:12px;color:var(--slate-light)}
+
+/* ============ APP SHELL ============ */
+#app{display:none;height:100vh}
+.shell{display:flex;height:100vh}
+
+/* Sidebar */
+.sidebar{
+  width:248px;flex-shrink:0;
+  background:linear-gradient(180deg,var(--petrol-800),var(--petrol-900));
+  display:flex;flex-direction:column;
+  padding:20px 14px;
+  position:relative;z-index:20;
+}
+.sb-logo{display:flex;align-items:center;gap:11px;padding:6px 10px 22px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+.sb-logo .logo-mark{width:40px;height:40px;border-radius:11px}
+.sb-logo .logo-mark svg{width:21px;height:21px}
+.sb-logo b{font-family:'Sora';font-weight:800;font-size:17px;color:#fff;line-height:1}
+.sb-logo span{font-size:10.5px;color:var(--teal-bright);letter-spacing:.08em;text-transform:uppercase}
+.nav-group-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);padding:14px 12px 7px;font-weight:600}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 12px;margin-bottom:3px;border-radius:11px;
+  color:rgba(255,255,255,.62);cursor:pointer;
+  font-size:14px;font-weight:500;transition:.18s;border:none;background:none;width:100%;text-align:left;
+  font-family:'DM Sans';position:relative;
+}
+.nav-item svg{width:19px;height:19px;flex-shrink:0}
+.nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-item.active{background:linear-gradient(135deg,var(--teal),var(--petrol-600));color:#fff;box-shadow:0 6px 16px rgba(26,163,163,.35)}
+.nav-item .badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:var(--amber);color:#3a2700}
+.nav-item.locked{opacity:.45;cursor:not-allowed}
+.nav-item.locked:hover{background:none;color:rgba(255,255,255,.62)}
+.nav-item .lock{margin-left:auto;width:14px;height:14px;opacity:.6}
+.sb-foot{margin-top:auto;padding:14px 12px 4px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{display:flex;align-items:center;gap:11px}
+.sb-avatar{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-family:'Sora';font-weight:700;font-size:15px;flex-shrink:0}
+.sb-user b{display:block;font-size:13.5px;color:#fff;line-height:1.2}
+.sb-user small{font-size:11px;color:rgba(255,255,255,.5)}
+.sb-logout{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.45);cursor:pointer;padding:6px;border-radius:8px;transition:.18s}
+.sb-logout:hover{color:#fff;background:rgba(255,255,255,.08)}
+
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{
+  height:66px;flex-shrink:0;background:var(--white);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;padding:0 30px;gap:20px;z-index:10;
+}
+.topbar h1{font-size:19px;color:var(--ink)}
+.topbar .crumb{font-size:12.5px;color:var(--slate-light);margin-top:2px}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.role-pill{font-size:11.5px;font-weight:700;padding:6px 13px;border-radius:30px;display:flex;align-items:center;gap:7px}
+.role-pill.admin{background:var(--teal-soft);color:var(--petrol-700)}
+.role-pill.view{background:var(--amber-soft);color:#9a6500}
+.role-pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.content{flex:1;overflow-y:auto;padding:30px;scroll-behavior:smooth}
+.content::-webkit-scrollbar{width:10px}
+.content::-webkit-scrollbar-thumb{background:#cfdde0;border-radius:10px;border:3px solid var(--paper)}
+
+/* View transitions */
+.view{display:none;animation:fade .45s cubic-bezier(.16,1,.3,1)}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ===== Dashboard ===== */
+.hero{
+  background:linear-gradient(120deg,var(--petrol-800),var(--petrol-600));
+  border-radius:22px;padding:30px 32px;color:#fff;position:relative;overflow:hidden;margin-bottom:24px;
+}
+.hero::before{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,192,.3),transparent 70%)}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(circle at 80% 20%,black,transparent 70%)}
+.hero-inner{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.hero h2{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:7px}
+.hero .big{font-size:30px;font-weight:800;line-height:1.1;margin-bottom:6px}
+.hero .sub{font-size:14px;color:rgba(255,255,255,.7);max-width:440px}
+.countdown{text-align:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:16px 26px;backdrop-filter:blur(8px)}
+.countdown .num{font-family:'Sora';font-size:44px;font-weight:800;line-height:1;background:linear-gradient(180deg,#fff,var(--teal-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.countdown .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.65);margin-top:6px}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:.25s}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.kpi .kic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px}
+.kpi .kic svg{width:22px;height:22px}
+.kpi .kval{font-family:'Sora';font-size:27px;font-weight:800;color:var(--ink);line-height:1}
+.kpi .klbl{font-size:12.5px;color:var(--slate);margin-top:5px}
+.kpi .ktag{position:absolute;top:18px;right:18px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+
+.panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:20px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.panel-head h3{font-size:17px;color:var(--ink)}
+.panel-head .hint{font-size:12.5px;color:var(--slate-light)}
+.two-col{display:grid;grid-template-columns:1.7fr 1fr;gap:20px;margin-bottom:20px}
+
+/* phase progress bars in dashboard */
+.phase-row{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.phase-row:last-child{border-bottom:none}
+.phase-dot{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;font-family:'Sora';font-weight:700;font-size:13px;color:#fff}
+.phase-info{flex:1;min-width:0}
+.phase-info .pn{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.phase-info .pd{font-size:11.5px;color:var(--slate-light);margin-top:1px}
+.pbar{flex:1;max-width:200px;height:8px;background:var(--line);border-radius:10px;overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:10px;transition:width .8s cubic-bezier(.16,1,.3,1)}
+.ppct{font-family:'JetBrains Mono';font-size:13px;font-weight:700;width:42px;text-align:right;flex-shrink:0}
+
+/* alerts list */
+.alert-item{display:flex;gap:12px;padding:12px;border-radius:12px;margin-bottom:9px;background:var(--paper);border:1px solid var(--line-soft)}
+.alert-item .ad{width:8px;border-radius:10px;flex-shrink:0}
+.alert-item .at{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3}
+.alert-item .as{font-size:11.5px;color:var(--slate);margin-top:3px}
+
+/* ===== Timeline ===== */
+.timeline{position:relative;padding:8px 0}
+.tl-track{position:absolute;left:130px;top:30px;bottom:20px;width:3px;background:var(--line)}
+.tl-item{position:relative;display:flex;gap:0;margin-bottom:6px;align-items:flex-start}
+.tl-date{width:118px;flex-shrink:0;text-align:right;padding-right:24px;padding-top:13px}
+.tl-date b{display:block;font-family:'Sora';font-size:13px;color:var(--ink)}
+.tl-date span{font-size:11px;color:var(--slate-light)}
+.tl-node{position:relative;z-index:2;flex-shrink:0;width:24px;height:24px;border-radius:50%;border:4px solid var(--white);box-shadow:0 0 0 2px var(--line);margin-top:11px;margin-left:-10px}
+.tl-card{flex:1;margin-left:24px;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:15px 18px;transition:.2s;cursor:pointer}
+.tl-card:hover{box-shadow:var(--shadow-md);transform:translateX(3px)}
+.tl-card.crit{border-color:var(--amber);background:linear-gradient(var(--white),var(--amber-soft))}
+.tl-card h4{font-size:14.5px;color:var(--ink);display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.tl-card p{font-size:12.5px;color:var(--slate);line-height:1.4}
+.tl-chip{font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em}
+
+/* ===== Phase detail cards ===== */
+.phase-card{background:var(--white);border:1px solid var(--line);border-radius:18px;margin-bottom:16px;overflow:hidden;transition:.2s}
+.phase-card:hover{box-shadow:var(--shadow-md)}
+.pc-head{padding:20px 24px;display:flex;align-items:center;gap:16px;cursor:pointer;user-select:none}
+.pc-num{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-family:'Sora';font-weight:800;font-size:17px;color:#fff;flex-shrink:0}
+.pc-meta{flex:1;min-width:0}
+.pc-meta h3{font-size:16.5px;color:var(--ink);margin-bottom:3px}
+.pc-meta .pcd{font-size:12.5px;color:var(--slate)}
+.pc-prog{text-align:right;flex-shrink:0}
+.pc-prog .pcp{font-family:'Sora';font-size:22px;font-weight:800}
+.pc-prog .pcl{font-size:11px;color:var(--slate-light)}
+.pc-chevron{transition:.3s;color:var(--slate-light);flex-shrink:0}
+.phase-card.open .pc-chevron{transform:rotate(180deg)}
+.pc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.pc-body-inner{padding:0 24px 22px;border-top:1px solid var(--line-soft)}
+.w5h2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}
+.w5h2 .cell{background:var(--paper);border-radius:11px;padding:12px 14px}
+.w5h2 .cell .k{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:4px}
+.w5h2 .cell .v{font-size:13px;color:var(--ink);line-height:1.4}
+.task-list{margin-top:8px}
+.task{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:11px;transition:.15s;border:1px solid transparent}
+.task:hover{background:var(--paper)}
+.task .chk{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex-shrink:0;cursor:pointer;display:grid;place-items:center;transition:.18s;margin-top:1px}
+.task .chk.done{background:var(--green);border-color:var(--green)}
+.task .chk svg{width:13px;height:13px;color:#fff;opacity:0;transition:.18s}
+.task .chk.done svg{opacity:1}
+.task .tx{flex:1}
+.task .tt{font-size:13.5px;color:var(--ink);line-height:1.4;transition:.18s}
+.task.done .tt{color:var(--slate-light);text-decoration:line-through}
+.task .tmeta{display:flex;gap:14px;margin-top:4px;font-size:11.5px;color:var(--slate-light)}
+.task .tmeta span{display:flex;align-items:center;gap:4px}
+.disabled-edit{pointer-events:none;opacity:.85}
+
+/* ===== Tables ===== */
+.tbl-wrap{background:var(--white);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--paper);text-align:left;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate);padding:14px 18px;border-bottom:1px solid var(--line)}
+tbody td{padding:14px 18px;font-size:13.5px;color:var(--ink);border-bottom:1px solid var(--line-soft)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:.15s}
+tbody tr:hover{background:var(--paper)}
+.st-pill{font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.st-pill .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ===== Future modules ===== */
+.future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.future-card{background:var(--white);border:2px dashed var(--line);border-radius:18px;padding:28px 24px;text-align:center;transition:.25s;position:relative;overflow:hidden}
+.future-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.future-card .fic{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;margin:0 auto 16px}
+.future-card .fic svg{width:30px;height:30px}
+.future-card h3{font-size:18px;color:var(--ink);margin-bottom:8px}
+.future-card p{font-size:13px;color:var(--slate);line-height:1.5;margin-bottom:16px}
+.future-card .ftag{font-size:11px;font-weight:700;color:var(--amber);background:var(--amber-soft);padding:5px 14px;border-radius:20px;display:inline-block}
+.future-feat{text-align:left;margin-top:18px;padding-top:18px;border-top:1px solid var(--line-soft)}
+.future-feat li{font-size:12.5px;color:var(--slate);padding:5px 0;display:flex;align-items:center;gap:9px;list-style:none}
+.future-feat li svg{width:15px;height:15px;color:var(--teal);flex-shrink:0}
+
+.section-intro{margin-bottom:22px}
+.section-intro h2{font-size:22px;color:var(--ink);margin-bottom:6px}
+.section-intro p{font-size:14px;color:var(--slate);max-width:680px;line-height:1.5}
+
+/* toast */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:12px;font-size:13.5px;font-weight:500;box-shadow:var(--shadow-lg);z-index:2000;transition:.4s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;gap:10px}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast svg{width:18px;height:18px;color:var(--teal-bright)}
+
+.empty-note{text-align:center;padding:50px 20px;color:var(--slate-light)}
+.empty-note svg{width:48px;height:48px;margin-bottom:14px;opacity:.5}
+
+/* ===== Gantt ===== */
+.gantt{overflow-x:auto;padding-bottom:6px}
+.gantt-inner{min-width:780px}
+.gantt-head{display:flex;border-bottom:2px solid var(--line);margin-bottom:6px}
+.gantt-label-col{width:210px;flex-shrink:0}
+.gantt-months{flex:1;display:flex;position:relative}
+.gantt-year{flex:1;text-align:center;font-family:'Sora';font-weight:700;font-size:12px;color:var(--ink);padding-bottom:8px;border-left:1px solid var(--line-soft)}
+.gantt-q{display:flex}
+.gantt-q span{flex:1;text-align:center;font-size:9.5px;color:var(--slate-light);padding:3px 0}
+.gantt-row{display:flex;align-items:center;height:42px;position:relative}
+.gantt-row:hover{background:var(--paper)}
+.gantt-rl{width:210px;flex-shrink:0;padding-right:14px;display:flex;align-items:center;gap:10px}
+.gantt-rl .gnum{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-family:'Sora';font-weight:700;font-size:11px;color:#fff;flex-shrink:0}
+.gantt-rl .gname{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gantt-lane{flex:1;position:relative;height:100%}
+.gantt-bar{position:absolute;top:50%;transform:translateY(-50%);height:20px;border-radius:7px;overflow:hidden;box-shadow:var(--shadow-sm);cursor:pointer;transition:.2s}
+.gantt-bar:hover{transform:translateY(-50%) scaleY(1.15);box-shadow:var(--shadow-md)}
+.gantt-bar .fill{height:100%;border-radius:7px 0 0 7px;position:relative}
+.gantt-bar .pct{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:9.5px;font-weight:700;color:#fff;font-family:'JetBrains Mono';text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.gantt-bar.crit{outline:2px solid var(--amber);outline-offset:1px}
+.gantt-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--line-soft);z-index:0}
+.gantt-today{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--coral);z-index:5}
+.gantt-today::before{content:"HOJE";position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:8.5px;font-weight:800;color:var(--coral);background:var(--coral-soft);padding:1px 6px;border-radius:10px;white-space:nowrap;letter-spacing:.04em}
+.gantt-prodline{position:absolute;top:6px;bottom:-4px;width:0;border-left:2px dashed var(--ink);opacity:.45;z-index:4}
+.gantt-milestone{position:absolute;top:50%;transform:translate(-50%,-50%) rotate(45deg);width:12px;height:12px;background:var(--ink);z-index:6;border:2px solid #fff;box-shadow:var(--shadow-sm)}
+.gantt-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.gantt-legend .lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--slate)}
+.gantt-legend .lg i{width:13px;height:13px;border-radius:4px}
+
+/* ===== Sales / Vendas ===== */
+.sales-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.chart-row{display:grid;grid-template-columns:1fr 1.3fr;gap:20px;margin-bottom:20px}
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center}
+.donut-legend{display:flex;flex-direction:column;gap:11px;min-width:150px}
+.donut-legend .dl{display:flex;align-items:center;gap:10px}
+.donut-legend .dl i{width:12px;height:12px;border-radius:4px;flex-shrink:0}
+.donut-legend .dl .dlt{font-size:13px;color:var(--ink);font-weight:600}
+.donut-legend .dl .dlv{margin-left:auto;font-family:'JetBrains Mono';font-size:12px;color:var(--slate);font-weight:700}
+.hbar-list{display:flex;flex-direction:column;gap:13px}
+.hbar{display:flex;align-items:center;gap:12px}
+.hbar .hbl{width:135px;flex-shrink:0;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbar .hbt{flex:1;height:24px;background:var(--line-soft);border-radius:7px;overflow:hidden;position:relative}
+.hbar .hbt i{display:block;height:100%;border-radius:7px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.hbar .hbv{width:78px;text-align:right;font-family:'JetBrains Mono';font-size:11.5px;font-weight:700;color:var(--petrol-700);flex-shrink:0}
+.fmt-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;color:#fff;white-space:nowrap}
+.sku-search{width:100%;max-width:280px;padding:9px 14px 9px 36px;border:1px solid var(--line);border-radius:11px;font-family:'DM Sans';font-size:13px;background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238499a0' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4-4'/%3E%3C/svg%3E") no-repeat 12px center;outline:none;transition:.2s}
+.sku-search:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+
+@media(max-width:1100px){
+  .sales-grid{grid-template-columns:repeat(2,1fr)}
+  .chart-row{grid-template-columns:1fr}
+}
+
+@media(max-width:1100px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+  .future-grid{grid-template-columns:1fr}
+}
+@media(max-width:780px){
+  .sidebar{position:fixed;left:-260px;transition:.3s;height:100vh}
+  .sidebar.mobile-open{left:0}
+  .kpi-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="login">
+  <div class="login-card">
+    <div class="logo-badge">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="#fff" stroke-width="1.6" opacity=".5"/><path d="M4 4l16 16M20 4L4 20" stroke="#fff" stroke-width="1.4" opacity=".7"/><circle cx="12" cy="12" r="3" fill="#fff"/></svg>
+      </div>
+      <div class="logo-text">
+        <b>Cristal Sete</b>
+        <span>Sistema de Gestão de Projeto</span>
+      </div>
+    </div>
+    <p class="login-title">Bem-vindo de volta</p>
+    <h2>Projeto Espelhos<br>Leroy Merlin</h2>
+    <button class="profile-opt c7" onclick="login('c7')">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+      <div>
+        <b>Cristal Sete · Administrador</b>
+        <small>Gerenciar e editar todo o projeto</small>
+      </div>
+      <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </button>
+    <button class="profile-opt lm" onclick="login('lm')">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg></div>
+      <div>
+        <b>Leroy Merlin · Acompanhamento</b>
+        <small>Visualizar progresso e relatórios</small>
+      </div>
+      <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </button>
+    <p class="login-foot">Cristal Sete · Apucarana/PR — Fornecimento ADEO</p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+<div class="shell">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="#fff" stroke-width="1.6" opacity=".5"/><path d="M4 4l16 16M20 4L4 20" stroke="#fff" stroke-width="1.4" opacity=".7"/><circle cx="12" cy="12" r="3" fill="#fff"/></svg></div>
+      <div><b>Cristal Sete</b><span>Gestão</span></div>
+    </div>
+
+    <div class="nav-group-label">Projeto Leroy Merlin</div>
+    <button class="nav-item active" onclick="nav('dashboard',this)">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="16" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg>
+      Dashboard
+    </button>
+    <button class="nav-item" onclick="nav('timeline',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M12 7a2 2 0 100-4 2 2 0 000 4zM12 13a2 2 0 100-4 2 2 0 000 4zM12 21a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.7"/><path d="M14 5h6M14 11h6M14 19h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      Cronograma
+    </button>
+    <button class="nav-item" onclick="nav('fases',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      Fases & Tarefas
+    </button>
+
+    <div class="nav-group-label">Recursos</div>
+    <button class="nav-item" onclick="nav('equipe',this)">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M2.5 20a6.5 6.5 0 0113 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16 4a3.2 3.2 0 010 6M18 20a6.5 6.5 0 00-2.5-5.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      Equipe
+    </button>
+    <button class="nav-item" onclick="nav('equipamentos',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.7"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 008.6 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H2a2 2 0 110-4h.09A1.65 1.65 0 003.6 8.6a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H8a1.65 1.65 0 001-1.51V2a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V8a1.65 1.65 0 001.51 1H22a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.5"/></svg>
+      Equipamentos
+    </button>
+    <button class="nav-item" onclick="nav('documentos',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      Documentos ADEO
+    </button>
+
+    <div class="nav-group-label">Operação (Futuro)</div>
+    <button class="nav-item" onclick="nav('vendas',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 3h2l2.4 12.4a2 2 0 002 1.6h7.7a2 2 0 002-1.6L21 7H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.4" fill="currentColor"/><circle cx="18" cy="20" r="1.4" fill="currentColor"/></svg>
+      Vendas
+      <span class="badge" style="background:var(--teal-bright);color:#062a2a">BETA</span>
+    </button>
+    <button class="nav-item" onclick="nav('estoque',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 7l9 4 9-4M12 11v10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Estoque
+      <span class="badge">SOON</span>
+    </button>
+    <button class="nav-item" onclick="nav('producao',this)">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M2 20h20M4 20V9l5 3V9l5 3V9l5 3v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Produção
+      <span class="badge">SOON</span>
+    </button>
+
+    <div class="sb-foot">
+      <div class="sb-user">
+        <div class="sb-avatar" id="sbAvatar">A</div>
+        <div>
+          <b id="sbName">Angelo</b>
+          <small id="sbRole">Cristal Sete</small>
+        </div>
+        <button class="sb-logout" onclick="logout()" title="Sair">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="pageTitle">Dashboard Executivo</h1>
+        <div class="crumb" id="pageCrumb">Visão geral do projeto</div>
+      </div>
+      <div class="tb-right">
+        <div class="role-pill admin" id="rolePill"><span class="dot"></span><span id="rolePillTxt">Modo Edição</span></div>
+      </div>
+    </header>
+    <div class="content" id="content"><!-- views injected --></div>
+  </div>
+</div>
+</div>
+
+<div id="toast"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="toastTxt">Salvo</span></div>
+
+<script>
+/* ============================================================
+   DADOS DO PROJETO  (persistidos em localStorage)
+   ============================================================ */
+const SEED = {
+  project:{
+    name:"Espelhos Leroy Merlin",
+    client:"Leroy Merlin / Grupo ADEO",
+    volumeAnual:61120,
+    primeiroPedido:15000,
+    faturamento:"R$ 5,9M",
+    investimento:"R$ 655k",
+    inicioProducao:"2027-02-01",
+    entregaLojas:"2027-04-01"
+  },
+  phases:[
+    {id:0,nome:"Prospecção e Mapeamento",inicio:"Jan/2025",fim:"Jun/2025",cor:"#1aa3a3",critica:false,
+      what:"Análise industrial de fornecedores e mapeamento de capacidade técnica e financeira da Cristal Sete",
+      who:"Angelo, Mauricio, Luiz (LM)",when:"Jan – Jun/2025",where:"Cristal Sete + Reuniões ADEO",
+      why:"Validar viabilidade técnica e financeira do projeto",how:"Análise de capacidade, orçamentos, mapeamento de gaps",howmuch:"R$ 10.000 · 24 semanas",
+      tasks:[
+        {t:"Definir especificações técnicas (23 SKUs × 4mm)",r:"Luiz + Angelo",d:"20/01/2025",done:true},
+        {t:"Análise de capacidade de produção Cristal Sete",r:"Mauricio",d:"31/01/2025",done:true},
+        {t:"Cotação de equipamentos (fornecedores potenciais)",r:"Mauricio",d:"28/02/2025",done:false},
+        {t:"Análise de custo estruturado (CBD)",r:"Angelo",d:"31/03/2025",done:false},
+        {t:"Negociação de contrato com ADEO/Leroy Merlin",r:"Angelo + Luiz",d:"30/04/2025",done:false},
+        {t:"Definição de fornecedores-chave (vidro, acessórios, silvering)",r:"Mauricio",d:"31/05/2025",done:false}
+      ]},
+    {id:1,nome:"Auditoria (Pré-Comercialização)",inicio:"Abr/2025",fim:"Jun/2025",cor:"#155060",critica:false,
+      what:"Auditorias obrigatórias ADEO: Ambiental, Social (ICS) e Qualidade (ISO 9001)",
+      who:"Terceiro contratado por ADEO · Angelo coordena",when:"Abr – Jun/2025",where:"Cristal Sete (Apucarana)",
+      why:"Validar conformidade com padrões ISO 9001 e ICS",how:"Visitas de auditores, checklist, evidências",howmuch:"~R$ 20.000 (Cristal Sete paga)",
+      tasks:[
+        {t:"Preparar documentação ambiental (resíduos, efluentes, água)",r:"Mauricio",d:"15/04/2025",done:false},
+        {t:"Preparar documentação social/RH (folha, EPIs, segurança)",r:"RH",d:"15/04/2025",done:false},
+        {t:"Preparar documentação de qualidade (procedimentos)",r:"Mauricio",d:"15/04/2025",done:false},
+        {t:"Agendar 3 auditorias com ADEO",r:"Angelo",d:"30/04/2025",done:false},
+        {t:"Realizar Auditoria Ambiental (2-2,5 dias)",r:"Terceiro/ADEO",d:"31/05/2025",done:false},
+        {t:"Realizar Auditoria Social ICS (2-4 dias)",r:"Terceiro/ADEO",d:"31/05/2025",done:false},
+        {t:"Realizar Auditoria Qualidade ISO (2 dias)",r:"Terceiro/ADEO",d:"15/06/2025",done:false}
+      ]},
+    {id:2,nome:"Contratação e Validações",inicio:"Jun/2025",fim:"Jul/2025",cor:"#15a04a",critica:false,
+      what:"Finalização de contrato, contratação de seguro, confirmação de fornecedores",
+      who:"Angelo, Diretor Financeiro, Mauricio",when:"Jun – Jul/2025",where:"Cristal Sete + Sedes ADEO",
+      why:"Formalizar obrigações legais, financeiras e comerciais",how:"Negociação, assinatura, ordens de compra",howmuch:"R$ 15.000",
+      tasks:[
+        {t:"Assinar contrato ADEO/Leroy Merlin",r:"Angelo",d:"30/06/2025",done:false},
+        {t:"Contratar Seguro Responsabilidade Civil (R$ 5M)",r:"Dir. Financeiro",d:"30/07/2025",done:false},
+        {t:"Contratar Seguro Recall (R$ 1M)",r:"Dir. Financeiro",d:"30/07/2025",done:false},
+        {t:"Finalizar Cost Breakdown (CBD)",r:"Angelo",d:"30/06/2025",done:false},
+        {t:"Confirmar fornecedores por escrito",r:"Mauricio",d:"30/06/2025",done:false}
+      ]},
+    {id:3,nome:"Planejamento de Processo e Produção",inicio:"Jul/2025",fim:"Set/2025",cor:"#f2a30a",critica:true,
+      what:"Definição completa do processo: leiaute, equipamentos, pessoal, fluxo, tempos e capacidade",
+      who:"Gerente de Produção (a contratar) + Mauricio + Especialista",when:"Jul – Set/2025",where:"Cristal Sete + Consultorias",
+      why:"ADEO exige aprovação do plano de produção antes do Kick-Off",how:"Consultorias, benchmarking, simulações, validação",howmuch:"R$ 45.000",
+      tasks:[
+        {t:"⚠️ CONTRATAR Gerente de Produção (especialista vidro)",r:"Angelo + RH",d:"31/07/2025",done:false},
+        {t:"Definir Leiaute de Produção (planta física)",r:"Ger. Produção",d:"01/08/2025",done:false},
+        {t:"Especificação técnica de cada equipamento",r:"Ger. Produção",d:"22/08/2025",done:false},
+        {t:"Fluxo de processo detalhado (23 SKUs + tempos)",r:"Ger. Produção",d:"29/08/2025",done:false},
+        {t:"Cálculo de capacidade (1.000 espelhos/dia?)",r:"Ger. Produção",d:"29/08/2025",done:false},
+        {t:"Plano de Recursos Humanos (job descriptions)",r:"RH + Ger. Produção",d:"05/09/2025",done:false},
+        {t:"Validação / Piloto interno",r:"Ger. Produção",d:"15/09/2025",done:false},
+        {t:"Relatório de planejamento para ADEO",r:"Angelo + Mauricio",d:"30/09/2025",done:false}
+      ]},
+    {id:4,nome:"Aquisição e Preparação",inicio:"Out/2025",fim:"Dez/2026",cor:"#155060",critica:false,
+      what:"Compra de equipamentos, adaptação de infraestrutura, recrutamento e treinamento",
+      who:"Gerente de Produção, Mauricio, Dir. Financeiro, RH",when:"Out/2025 – Dez/2026",where:"Cristal Sete (Apucarana)",
+      why:"Ter instalações, equipamentos e pessoal prontos para Jan/2027",how:"Licitações, compras, instalação, contratação, treinamento",howmuch:"R$ 500.000+",
+      tasks:[
+        {t:"Licitação e compra de equipamentos",r:"Ger. Produção",d:"31/10/2025",done:false},
+        {t:"Entrega e instalação de equipamentos",r:"Fornecedores",d:"31/12/2025",done:false},
+        {t:"Adaptação do espaço físico",r:"Ger. Produção",d:"31/12/2025",done:false},
+        {t:"Recrutamento de 12 operadores",r:"RH",d:"30/11/2025",done:false},
+        {t:"Treinamento teórico do pessoal",r:"Ger. Produção",d:"31/12/2025",done:false}
+      ]},
+    {id:5,nome:"SPD e Validação do Processo",inicio:"Jan/2027",fim:"Jan/2027",cor:"#1aa3a3",critica:false,
+      what:"Validação do Processo Produtivo (SPD) — auditoria de conformidade",
+      who:"Terceiro contratado por ADEO + Ger. Produção",when:"Janeiro/2027",where:"Cristal Sete (Apucarana)",
+      why:"Validar que o processo atende às especificações ADEO",how:"Auditoria de processo, testes de qualidade",howmuch:"Máx R$ 3.370/dia",
+      tasks:[
+        {t:"Testes de máquinas (sem produção)",r:"Ger. Produção + Técnicos",d:"15/01/2027",done:false},
+        {t:"Treinamento prático com máquinas",r:"Ger. Produção",d:"15/01/2027",done:false},
+        {t:"Produção piloto (50-100 unidades)",r:"Equipe Produção",d:"25/01/2027",done:false},
+        {t:"Auditoria SPD por ADEO",r:"Terceiro/ADEO",d:"31/01/2027",done:false}
+      ]},
+    {id:6,nome:"Ramp-Up e Produção Inicial",inicio:"Fev/2027",fim:"Mar/2027",cor:"#e8573f",critica:false,
+      what:"Primeira produção: 15.000 espelhos em 3 semanas (5.000/semana)",
+      who:"Gerente de Produção + Equipe completa (16 pessoas)",when:"Fevereiro/2027",where:"Cristal Sete → Entrega São Paulo",
+      why:"Atender primeiro pedido da Leroy Merlin",how:"Produção em ritmo, inspeção 100%, embalagem ADEO",howmuch:"Operacional R$ 118k/mês",
+      tasks:[
+        {t:"Semana 1: produzir 5.000 espelhos",r:"Equipe Produção",d:"07/02/2027",done:false},
+        {t:"Semana 2: produzir 5.000 espelhos",r:"Equipe Produção",d:"14/02/2027",done:false},
+        {t:"Semana 3: produzir 5.000 espelhos",r:"Equipe Produção",d:"21/02/2027",done:false},
+        {t:"Relatório de produção para ADEO",r:"Ger. Produção",d:"28/02/2027",done:false},
+        {t:"Primeira entrega às lojas (São Paulo)",r:"Logística",d:"01/04/2027",done:false}
+      ]}
+  ],
+  team:[
+    {f:"Gerente Geral",n:"Angelo",st:"ok",dt:"—",sal:"—"},
+    {f:"Coordenador de Projeto",n:"Mauricio",st:"ok",dt:"—",sal:"—"},
+    {f:"Gerente de Produção",n:"A contratar",st:"crit",dt:"31/07/2025",sal:"R$ 8-12k"},
+    {f:"Operador Máquina Corte",n:"A contratar (1)",st:"wait",dt:"30/11/2025",sal:"R$ 4.000"},
+    {f:"Operadores Lapidadora",n:"A contratar (2)",st:"wait",dt:"30/11/2025",sal:"R$ 3.500"},
+    {f:"Técnicos Colagem",n:"A contratar (3)",st:"wait",dt:"30/11/2025",sal:"R$ 3.200"},
+    {f:"Operadores Embalagem",n:"A contratar (2)",st:"wait",dt:"30/11/2025",sal:"R$ 3.000"},
+    {f:"Paletizador",n:"A contratar (1)",st:"wait",dt:"30/11/2025",sal:"R$ 3.200"},
+    {f:"Inspetores Qualidade",n:"A contratar (2)",st:"wait",dt:"30/11/2025",sal:"R$ 4.500"},
+    {f:"Técnico Manutenção",n:"A contratar (1)",st:"wait",dt:"30/11/2025",sal:"R$ 4.800"}
+  ],
+  equip:[
+    {m:"Máquina de Corte CNC",q:"1",c:"R$ 80.000",o:"Corte preciso",st:"plan"},
+    {m:"Lapidadora Reta Automática",q:"1",c:"R$ 45.000",o:"Polimento de bordas",st:"plan"},
+    {m:"Lapidadora Manual",q:"2",c:"R$ 8.000/un",o:"Ajustes e acabamentos",st:"plan"},
+    {m:"Estação de Colagem",q:"2",c:"R$ 12.000/un",o:"Aplicação de acessórios",st:"plan"},
+    {m:"Embaladora Automática",q:"1",c:"R$ 55.000",o:"Embalagem papelão",st:"plan"},
+    {m:"Máquina Paletizadora",q:"1",c:"R$ 95.000",o:"Paletização",st:"plan"},
+    {m:"Ponte Rolante",q:"1",c:"R$ 40.000",o:"Movimentação de cargas",st:"plan"},
+    {m:"Estantes de Armazenagem",q:"20",c:"R$ 3.000/un",o:"Organização de insumos",st:"plan"}
+  ],
+  docs:[
+    {d:"Contrato ADEO/Leroy Merlin assinado",st:"pend",dt:"30/06/2025"},
+    {d:"Seguro Responsabilidade Civil (R$ 5M)",st:"pend",dt:"30/07/2025"},
+    {d:"Seguro Recall (R$ 1M)",st:"pend",dt:"30/07/2025"},
+    {d:"Especificações técnicas (23 SKUs)",st:"pend",dt:"15/06/2025"},
+    {d:"Cost Breakdown (CBD) aprovado",st:"pend",dt:"30/06/2025"},
+    {d:"Fornecedores confirmados",st:"pend",dt:"30/06/2025"},
+    {d:"Auditoria Ambiental (ISO 14001)",st:"pend",dt:"30/06/2025"},
+    {d:"Auditoria Social (ICS)",st:"pend",dt:"30/06/2025"},
+    {d:"Auditoria Qualidade (ISO 9001)",st:"pend",dt:"30/06/2025"},
+    {d:"Plano de Processo Produtivo (Fase 3)",st:"crit",dt:"30/09/2025"},
+    {d:"SPD — Validação do Processo",st:"pend",dt:"31/01/2027"}
+  ],
+  skus:[
+    // RETANGULARES (8)
+    {cod:"ESP-RET-4060",fmt:"Retangular",dim:"40 × 60 cm",qty:5200,price:62},
+    {cod:"ESP-RET-5070",fmt:"Retangular",dim:"50 × 70 cm",qty:4800,price:82},
+    {cod:"ESP-RET-5080",fmt:"Retangular",dim:"50 × 80 cm",qty:3600,price:92},
+    {cod:"ESP-RET-6080",fmt:"Retangular",dim:"60 × 80 cm",qty:4200,price:109},
+    {cod:"ESP-RET-60100",fmt:"Retangular",dim:"60 × 100 cm",qty:2400,price:129},
+    {cod:"ESP-RET-7090",fmt:"Retangular",dim:"70 × 90 cm",qty:3000,price:139},
+    {cod:"ESP-RET-4580",fmt:"Retangular",dim:"45 × 80 cm",qty:2800,price:78},
+    {cod:"ESP-RET-80120",fmt:"Retangular",dim:"80 × 120 cm",qty:1800,price:185},
+    // REDONDOS (5)
+    {cod:"ESP-RED-D40",fmt:"Redondo",dim:"Ø 40 cm",qty:3800,price:59},
+    {cod:"ESP-RED-D50",fmt:"Redondo",dim:"Ø 50 cm",qty:3400,price:72},
+    {cod:"ESP-RED-D60",fmt:"Redondo",dim:"Ø 60 cm",qty:2900,price:92},
+    {cod:"ESP-RED-D70",fmt:"Redondo",dim:"Ø 70 cm",qty:2200,price:115},
+    {cod:"ESP-RED-D80",fmt:"Redondo",dim:"Ø 80 cm",qty:1600,price:145},
+    // QUADRADOS (5)
+    {cod:"ESP-QUA-4040",fmt:"Quadrado",dim:"40 × 40 cm",qty:2900,price:52},
+    {cod:"ESP-QUA-5050",fmt:"Quadrado",dim:"50 × 50 cm",qty:2600,price:69},
+    {cod:"ESP-QUA-6060",fmt:"Quadrado",dim:"60 × 60 cm",qty:2300,price:88},
+    {cod:"ESP-QUA-7070",fmt:"Quadrado",dim:"70 × 70 cm",qty:1700,price:109},
+    {cod:"ESP-QUA-8080",fmt:"Quadrado",dim:"80 × 80 cm",qty:1200,price:139},
+    // ORGÂNICOS (4)
+    {cod:"ESP-ORG-4565",fmt:"Orgânico",dim:"45 × 65 cm",qty:1900,price:88},
+    {cod:"ESP-ORG-5070",fmt:"Orgânico",dim:"50 × 70 cm",qty:2100,price:99},
+    {cod:"ESP-ORG-5580",fmt:"Orgânico",dim:"55 × 80 cm",qty:1320,price:115},
+    {cod:"ESP-ORG-6090",fmt:"Orgânico",dim:"60 × 90 cm",qty:1500,price:135},
+    // PÍLULA (1)
+    {cod:"ESP-PIL-4080",fmt:"Pílula",dim:"40 × 80 cm",qty:1900,price:105}
+  ],
+  orders:[
+    {id:"PED-2027-001",lote:"Lote 1 · Semana 1",data:"01–07 Fev/2027",qty:5000,status:"agendado",prog:0},
+    {id:"PED-2027-002",lote:"Lote 2 · Semana 2",data:"08–14 Fev/2027",qty:5000,status:"agendado",prog:0},
+    {id:"PED-2027-003",lote:"Lote 3 · Semana 3",data:"15–21 Fev/2027",qty:5000,status:"agendado",prog:0}
+  ]
+};
+const FMT_COLORS = {Retangular:"#1aa3a3",Redondo:"#155060",Quadrado:"#f2a30a","Orgânico":"#e8573f","Pílula":"#1f9d6b"};
+
+/* ============ STATE ============ */
+let DB, USER;
+const STORAGE_KEY = "cristalsete_lm_v1";
+
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    DB = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(SEED));
+  }catch(e){ DB = JSON.parse(JSON.stringify(SEED)); }
+}
+function saveDB(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }catch(e){}
+}
+function resetDB(){
+  if(confirm("Restaurar todos os dados ao estado inicial? As alterações serão perdidas.")){
+    DB = JSON.parse(JSON.stringify(SEED)); saveDB(); render(currentView); toast("Dados restaurados");
+  }
+}
+
+/* ============ AUTH ============ */
+function login(profile){
+  USER = profile==='c7'
+    ? {role:'admin',name:'Angelo',org:'Cristal Sete',avatar:'A',color:'#1aa3a3'}
+    : {role:'view',name:'Luiz',org:'Leroy Merlin',avatar:'L',color:'#f2a30a'};
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  // setup user UI
+  document.getElementById('sbName').textContent = USER.name;
+  document.getElementById('sbRole').textContent = USER.org;
+  const av = document.getElementById('sbAvatar');
+  av.textContent = USER.avatar;
+  av.style.background = USER.role==='admin' ? 'var(--teal-soft)' : 'var(--amber-soft)';
+  av.style.color = USER.role==='admin' ? 'var(--petrol-700)' : '#9a6500';
+  const pill = document.getElementById('rolePill');
+  const ptxt = document.getElementById('rolePillTxt');
+  if(USER.role==='admin'){ pill.className='role-pill admin'; ptxt.textContent='Cristal Sete · Modo Edição'; }
+  else { pill.className='role-pill view'; ptxt.textContent='Leroy Merlin · Visualização'; }
+  loadDB();
+  render('dashboard');
+}
+function logout(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('login').style.display='flex';
+  USER=null;
+}
+const isAdmin = ()=> USER && USER.role==='admin';
+
+/* ============ NAV ============ */
+let currentView='dashboard';
+const LOCKED = ['vendas','estoque','producao'];
+const TITLES = {
+  dashboard:["Dashboard Executivo","Visão geral do projeto"],
+  timeline:["Cronograma","Linha do tempo das 7 fases"],
+  fases:["Fases & Tarefas","Acompanhe e atualize cada etapa"],
+  equipe:["Equipe","Estrutura de pessoal do projeto"],
+  equipamentos:["Equipamentos","Máquinas e investimento"],
+  documentos:["Documentos ADEO","Requisitos obrigatórios do processo"],
+  vendas:["Vendas","Programa anual · 23 SKUs · pedidos Leroy Merlin"],
+  estoque:["Estoque","Módulo futuro"],
+  producao:["Produção","Módulo futuro"]
+};
+function nav(view, el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  render(view);
+}
+function render(view){
+  currentView=view;
+  const [t,c]=TITLES[view]||["",""];
+  document.getElementById('pageTitle').textContent=t;
+  document.getElementById('pageCrumb').textContent=c;
+  const C=document.getElementById('content');
+  C.scrollTop=0;
+  C.innerHTML = `<div class="view active">${VIEWS[view]()}</div>`;
+  if(view==='dashboard'||view==='vendas') setTimeout(animateBars,80);
+}
+
+/* ============ HELPERS ============ */
+function toast(msg){
+  document.getElementById('toastTxt').textContent=msg;
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(window.__tt);
+  window.__tt=setTimeout(()=>t.classList.remove('show'),2200);
+}
+function phaseProgress(p){
+  if(!p.tasks.length) return 0;
+  return Math.round(p.tasks.filter(t=>t.done).length / p.tasks.length * 100);
+}
+function overallProgress(){
+  let total=0,done=0;
+  DB.phases.forEach(p=>{ total+=p.tasks.length; done+=p.tasks.filter(t=>t.done).length; });
+  return total? Math.round(done/total*100):0;
+}
+function daysUntil(dateStr){
+  const target=new Date(dateStr), now=new Date();
+  return Math.max(0, Math.ceil((target-now)/(1000*60*60*24)));
+}
+function progColor(pct){
+  if(pct>=100) return '#1f9d6b';
+  if(pct>=50) return '#1aa3a3';
+  if(pct>0) return '#f2a30a';
+  return '#cfdde0';
+}
+function animateBars(){
+  document.querySelectorAll('.pbar i[data-w], .hbt i[data-w]').forEach(el=>{
+    const w=el.getAttribute('data-w'); el.style.width='0%';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.width=w+'%'}));
+  });
+}
+function brl(n){ return 'R$ ' + n.toLocaleString('pt-BR'); }
+function brlShort(n){
+  if(n>=1e6) return 'R$ '+(n/1e6).toFixed(2).replace('.',',')+'M';
+  if(n>=1e3) return 'R$ '+Math.round(n/1e3)+'k';
+  return 'R$ '+n;
+}
+/* SKU aggregations */
+function skuRevenue(s){ return s.qty * s.price; }
+function totalVolume(){ return DB.skus.reduce((a,s)=>a+s.qty,0); }
+function totalRevenue(){ return DB.skus.reduce((a,s)=>a+skuRevenue(s),0); }
+function byFormat(){
+  const map={};
+  DB.skus.forEach(s=>{
+    if(!map[s.fmt]) map[s.fmt]={fmt:s.fmt,qty:0,rev:0,count:0,color:FMT_COLORS[s.fmt]};
+    map[s.fmt].qty+=s.qty; map[s.fmt].rev+=skuRevenue(s); map[s.fmt].count++;
+  });
+  return Object.values(map).sort((a,b)=>b.qty-a.qty);
+}
+/* Donut chart (SVG) */
+function donut(segments, total, centerLabel, centerSub){
+  const R=66, C=2*Math.PI*R, sw=26;
+  let offset=0;
+  const arcs=segments.map(s=>{
+    const frac=s.value/total;
+    const len=frac*C;
+    const arc=`<circle cx="90" cy="90" r="${R}" fill="none" stroke="${s.color}" stroke-width="${sw}"
+      stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-offset}"
+      transform="rotate(-90 90 90)" style="transition:stroke-dasharray .9s cubic-bezier(.16,1,.3,1)"/>`;
+    offset+=len; return arc;
+  }).join('');
+  return `<svg viewBox="0 0 180 180" width="180" height="180">
+    <circle cx="90" cy="90" r="${R}" fill="none" stroke="var(--line)" stroke-width="${sw}"/>
+    ${arcs}
+    <text x="90" y="84" text-anchor="middle" font-family="Sora" font-weight="800" font-size="26" fill="var(--ink)">${centerLabel}</text>
+    <text x="90" y="104" text-anchor="middle" font-family="DM Sans" font-size="11" fill="var(--slate)">${centerSub}</text>
+  </svg>`;
+}
+/* Gantt helpers */
+const GMONTHS=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const GANTT_START=2025, GANTT_SPAN=36; // Jan/2025 .. Dez/2027
+function mIdx(label){ // "Jan/2025" -> 0
+  if(!label || label.toLowerCase().includes('cont')) return GANTT_SPAN-1;
+  const [m,y]=label.split('/');
+  return (parseInt(y)-GANTT_START)*12 + GMONTHS.indexOf(m);
+}
+function todayIdx(){
+  const n=new Date();
+  return Math.max(0,Math.min(GANTT_SPAN-1,(n.getFullYear()-GANTT_START)*12 + n.getMonth()));
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+const VIEWS = {};
+
+/* ---------- DASHBOARD ---------- */
+VIEWS.dashboard = function(){
+  const overall=overallProgress();
+  const dProd=daysUntil(DB.project.inicioProducao);
+  const pendingDocs=DB.docs.filter(d=>d.st!=='ok').length;
+  const teamPending=DB.team.filter(t=>t.st!=='ok').length;
+  const critPhase=DB.phases.find(p=>p.critica);
+  const critPct=phaseProgress(critPhase);
+
+  // alerts
+  const alerts=[];
+  alerts.push({c:'#f2a30a',t:'Fase 3 (Planejamento) é crítica',s:'Tudo deve estar pronto até 30/09/2025'});
+  alerts.push({c:'#e8573f',t:'Contratar Gerente de Produção',s:'Prazo: 31/07/2025 · ainda pendente'});
+  alerts.push({c:'#1aa3a3',t:'Definir fornecedores-chave',s:'Vidro, acessórios e silvering · até 31/05/2025'});
+
+  return `
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <h2>Cristal Sete · Fornecimento ADEO</h2>
+        <div class="big">${DB.project.name}</div>
+        <div class="sub">${DB.project.volumeAnual.toLocaleString('pt-BR')} espelhos/ano · 23 referências · ${DB.project.faturamento}/ano de faturamento previsto</div>
+      </div>
+      <div class="countdown">
+        <div class="num">${dProd}</div>
+        <div class="lbl">dias até a produção</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kic" style="background:var(--teal-soft);color:var(--petrol-700)"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 7h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="kval">${overall}%</div>
+      <div class="klbl">Progresso geral do projeto</div>
+    </div>
+    <div class="kpi">
+      <div class="kic" style="background:var(--amber-soft);color:#b8780a"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="kval">${critPct}%</div>
+      <div class="klbl">Fase Crítica (Planejamento)</div>
+      <span class="ktag" style="background:var(--amber-soft);color:#b8780a">JUL-SET</span>
+    </div>
+    <div class="kpi">
+      <div class="kic" style="background:var(--coral-soft);color:var(--coral)"><svg viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.7"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="1.7"/></svg></div>
+      <div class="kval">${pendingDocs}</div>
+      <div class="klbl">Documentos ADEO pendentes</div>
+    </div>
+    <div class="kpi">
+      <div class="kic" style="background:#e7eef7;color:#3a5e8c"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M3 20a6 6 0 0112 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+      <div class="kval">${teamPending}</div>
+      <div class="klbl">Vagas a preencher</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-head"><h3>Progresso por Fase</h3><span class="hint">${DB.phases.length} fases</span></div>
+      ${DB.phases.map(p=>{
+        const pct=phaseProgress(p);
+        return `<div class="phase-row">
+          <div class="phase-dot" style="background:${p.cor}">${p.id}</div>
+          <div class="phase-info">
+            <div class="pn">${p.nome} ${p.critica?'⚠️':''}</div>
+            <div class="pd">${p.inicio} → ${p.fim}</div>
+          </div>
+          <div class="pbar"><i data-w="${pct}" style="width:${pct}%;background:${progColor(pct)}"></i></div>
+          <div class="ppct mono" style="color:${progColor(pct)}">${pct}%</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Alertas & Prioridades</h3></div>
+      ${alerts.map(a=>`
+        <div class="alert-item">
+          <div class="ad" style="background:${a.c}"></div>
+          <div><div class="at">${a.t}</div><div class="as">${a.s}</div></div>
+        </div>`).join('')}
+      <div style="margin-top:14px;padding:14px;background:linear-gradient(135deg,var(--petrol-800),var(--petrol-600));border-radius:12px;color:#fff">
+        <div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:6px">Marco Final</div>
+        <div style="font-family:'Sora';font-size:15px;font-weight:700">Início de Produção</div>
+        <div style="font-size:12.5px;color:rgba(255,255,255,.7);margin-top:2px">01 Fevereiro 2027 · 15.000 espelhos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>Números do Projeto</h3><span class="hint">Resumo executivo</span></div>
+    <div class="kpi-grid" style="margin:0">
+      <div style="padding:16px;background:var(--paper);border-radius:14px">
+        <div class="mono" style="font-size:24px;font-weight:700;color:var(--petrol-700)">${DB.project.volumeAnual.toLocaleString('pt-BR')}</div>
+        <div style="font-size:12.5px;color:var(--slate);margin-top:3px">Espelhos por ano</div>
+      </div>
+      <div style="padding:16px;background:var(--paper);border-radius:14px">
+        <div class="mono" style="font-size:24px;font-weight:700;color:var(--petrol-700)">${DB.project.primeiroPedido.toLocaleString('pt-BR')}</div>
+        <div style="font-size:12.5px;color:var(--slate);margin-top:3px">Primeiro pedido (Fev/27)</div>
+      </div>
+      <div style="padding:16px;background:var(--paper);border-radius:14px">
+        <div class="mono" style="font-size:24px;font-weight:700;color:var(--green)">${DB.project.faturamento}</div>
+        <div style="font-size:12.5px;color:var(--slate);margin-top:3px">Faturamento anual</div>
+      </div>
+      <div style="padding:16px;background:var(--paper);border-radius:14px">
+        <div class="mono" style="font-size:24px;font-weight:700;color:var(--coral)">${DB.project.investimento}</div>
+        <div style="font-size:12.5px;color:var(--slate);margin-top:3px">Investimento total</div>
+      </div>
+    </div>
+  </div>
+  `;
+};
+
+/* ---------- TIMELINE ---------- */
+VIEWS.timeline = function(){
+  // ----- GANTT -----
+  const ti=todayIdx();
+  const prodIdx=mIdx('Fev/2027');
+  const yearW=100/3; // 3 anos
+  const ganttRows=DB.phases.map(p=>{
+    const g0=mIdx(p.inicio), g1=mIdx(p.fim);
+    const left=g0/GANTT_SPAN*100;
+    const width=Math.max((g1-g0+1)/GANTT_SPAN*100,3);
+    const pct=phaseProgress(p);
+    return `<div class="gantt-row">
+      <div class="gantt-rl">
+        <div class="gnum" style="background:${p.cor}">${p.id}</div>
+        <div class="gname" title="${p.nome}">${p.nome}</div>
+      </div>
+      <div class="gantt-lane">
+        ${[...Array(GANTT_SPAN+1)].map((_,i)=>i%3===0?`<div class="gantt-grid-line" style="left:${i/GANTT_SPAN*100}%"></div>`:'').join('')}
+        <div class="gantt-bar ${p.critica?'crit':''}" style="left:${left}%;width:${width}%;background:${p.cor}22"
+             title="Fase ${p.id}: ${p.nome} · ${pct}%">
+          <div class="fill" style="width:${Math.max(pct,4)}%;background:${p.cor}"></div>
+          <span class="pct">${pct}%</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const gantt=`
+  <div class="panel">
+    <div class="panel-head"><h3>Gráfico de Gantt</h3><span class="hint">Jan/2025 → Dez/2027</span></div>
+    <div class="gantt">
+      <div class="gantt-inner">
+        <div class="gantt-head">
+          <div class="gantt-label-col"></div>
+          <div class="gantt-months">
+            ${[2025,2026,2027].map(y=>`<div class="gantt-year">${y}
+              <div class="gantt-q"><span>T1</span><span>T2</span><span>T3</span><span>T4</span></div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div style="position:relative">
+          <div style="position:absolute;left:210px;right:0;top:0;bottom:0;pointer-events:none;z-index:5">
+            <div class="gantt-today" style="left:${ti/GANTT_SPAN*100}%"></div>
+            <div class="gantt-prodline" style="left:${prodIdx/GANTT_SPAN*100}%"></div>
+            <div class="gantt-milestone" style="left:${prodIdx/GANTT_SPAN*100}%;top:0" title="Início de Produção · Fev/2027"></div>
+          </div>
+          ${ganttRows}
+        </div>
+      </div>
+    </div>
+    <div class="gantt-legend">
+      <div class="lg"><i style="background:var(--teal)"></i>Fase em andamento</div>
+      <div class="lg"><i style="background:var(--amber);outline:2px solid var(--amber);outline-offset:1px"></i>Fase crítica</div>
+      <div class="lg"><span style="display:inline-block;width:11px;height:11px;background:var(--ink);transform:rotate(45deg)"></span>&nbsp;Marco: Início Produção</div>
+      <div class="lg"><span style="display:inline-block;width:2px;height:14px;background:var(--coral)"></span>Hoje</div>
+    </div>
+  </div>`;
+
+  return `
+  <div class="section-intro">
+    <h2>Cronograma do Projeto</h2>
+    <p>Da prospecção atual até a produção em regime. A <b style="color:var(--amber)">Fase 3 (Jul–Set/2025)</b> é o marco mais crítico — todo o planejamento de processo precisa estar aprovado pela ADEO.</p>
+  </div>
+  ${gantt}
+  <div class="panel">
+    <div class="panel-head"><h3>Linha do Tempo Detalhada</h3><span class="hint">Clique para ver as tarefas</span></div>
+    <div class="timeline">
+      <div class="tl-track"></div>
+      ${DB.phases.map(p=>{
+        const pct=phaseProgress(p);
+        const stTxt = pct>=100?'Concluída':pct>0?'Em andamento':'A iniciar';
+        const stBg = pct>=100?'var(--green-soft)':pct>0?'var(--teal-soft)':'var(--line-soft)';
+        const stCo = pct>=100?'var(--green)':pct>0?'var(--petrol-700)':'var(--slate)';
+        return `<div class="tl-item">
+          <div class="tl-date"><b>${p.inicio}</b><span>até ${p.fim}</span></div>
+          <div class="tl-node" style="background:${p.cor}"></div>
+          <div class="tl-card ${p.critica?'crit':''}" onclick="gotoFases()">
+            <h4>Fase ${p.id} · ${p.nome} ${p.critica?'<span class="tl-chip" style="background:var(--amber);color:#3a2700">CRÍTICA</span>':''}</h4>
+            <p>${p.what}</p>
+            <div style="margin-top:9px;display:flex;align-items:center;gap:10px">
+              <span class="tl-chip" style="background:${stBg};color:${stCo}">${stTxt}</span>
+              <span class="mono" style="font-size:12px;color:${progColor(pct)};font-weight:700">${pct}%</span>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+};
+function gotoFases(){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.nav-item')[2].classList.add('active');
+  render('fases');
+}
+
+/* ---------- FASES & TAREFAS ---------- */
+VIEWS.fases = function(){
+  return `
+  <div class="section-intro" style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+    <div>
+      <h2>Fases & Tarefas</h2>
+      <p>${isAdmin()?'Marque as tarefas concluídas para atualizar o progresso em tempo real.':'Visualização do progresso de cada fase (somente leitura).'}</p>
+    </div>
+    ${isAdmin()?`<button onclick="resetDB()" style="background:var(--white);border:1px solid var(--line);border-radius:11px;padding:10px 16px;font-family:'DM Sans';font-size:13px;font-weight:600;color:var(--slate);cursor:pointer;display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurar dados</button>`:''}
+  </div>
+  ${DB.phases.map(p=>{
+    const pct=phaseProgress(p);
+    return `
+    <div class="phase-card ${p.critica?'open':''}" id="pc${p.id}">
+      <div class="pc-head" onclick="togglePhase(${p.id})">
+        <div class="pc-num" style="background:${p.cor}">${p.id}</div>
+        <div class="pc-meta">
+          <h3>${p.nome} ${p.critica?'<span class="tl-chip" style="background:var(--amber);color:#3a2700;vertical-align:middle">CRÍTICA</span>':''}</h3>
+          <div class="pcd">${p.inicio} → ${p.fim} · ${p.tasks.filter(t=>t.done).length}/${p.tasks.length} tarefas</div>
+        </div>
+        <div class="pc-prog">
+          <div class="pcp" style="color:${progColor(pct)}">${pct}%</div>
+          <div class="pcl">concluído</div>
+        </div>
+        <svg class="pc-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="pc-body" ${p.critica?'style="max-height:2000px"':''}>
+        <div class="pc-body-inner">
+          <div class="w5h2">
+            <div class="cell"><div class="k">O quê</div><div class="v">${p.what}</div></div>
+            <div class="cell"><div class="k">Quem</div><div class="v">${p.who}</div></div>
+            <div class="cell"><div class="k">Quando</div><div class="v">${p.when}</div></div>
+            <div class="cell"><div class="k">Onde</div><div class="v">${p.where}</div></div>
+            <div class="cell"><div class="k">Por quê</div><div class="v">${p.why}</div></div>
+            <div class="cell"><div class="k">Como</div><div class="v">${p.how}</div></div>
+            <div class="cell" style="grid-column:span 2"><div class="k">Quanto custa</div><div class="v">${p.howmuch}</div></div>
+          </div>
+          <div class="task-list ${isAdmin()?'':'disabled-edit'}">
+            ${p.tasks.map((t,ti)=>`
+              <div class="task ${t.done?'done':''}">
+                <div class="chk ${t.done?'done':''}" onclick="toggleTask(${p.id},${ti})">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="tx">
+                  <div class="tt">${t.t}</div>
+                  <div class="tmeta">
+                    <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M5 20a7 7 0 0114 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>${t.r}</span>
+                    <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>${t.d}</span>
+                  </div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('')}`;
+};
+function togglePhase(id){
+  const card=document.getElementById('pc'+id);
+  const body=card.querySelector('.pc-body');
+  if(card.classList.contains('open')){
+    card.classList.remove('open'); body.style.maxHeight='0';
+  }else{
+    card.classList.add('open'); body.style.maxHeight=body.scrollHeight+40+'px';
+  }
+}
+function toggleTask(pid,tid){
+  if(!isAdmin()){ toast('Apenas Cristal Sete pode editar'); return; }
+  const t=DB.phases[pid].tasks[tid];
+  t.done=!t.done; saveDB();
+  // re-render fases keeping this phase open
+  render('fases');
+  const card=document.getElementById('pc'+pid);
+  card.classList.add('open');
+  const body=card.querySelector('.pc-body'); body.style.maxHeight='2000px';
+  toast(t.done?'Tarefa concluída ✓':'Tarefa reaberta');
+}
+
+/* ---------- EQUIPE ---------- */
+VIEWS.equipe = function(){
+  const stMap={ok:['Contratado','var(--green-soft)','var(--green)'],crit:['Crítico','var(--coral-soft)','var(--coral)'],wait:['A contratar','var(--amber-soft)','#b8780a']};
+  return `
+  <div class="section-intro">
+    <h2>Estrutura de Equipe</h2>
+    <p>Hoje a Cristal Sete conta com 2 pessoas no projeto. Até Nov/2025 serão necessárias <b>16 pessoas</b> para a operação. A contratação do Gerente de Produção (Jul/2025) é a mais urgente.</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Função</th><th>Situação</th><th>Status</th><th>Contratação</th><th>Salário Est.</th></tr></thead>
+      <tbody>
+        ${DB.team.map(p=>{
+          const [lbl,bg,co]=stMap[p.st];
+          return `<tr>
+            <td style="font-weight:600">${p.f}</td>
+            <td>${p.n}</td>
+            <td><span class="st-pill" style="background:${bg};color:${co}"><span class="d"></span>${lbl}</span></td>
+            <td class="mono" style="font-size:12.5px">${p.dt}</td>
+            <td class="mono" style="font-size:12.5px">${p.sal}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+};
+
+/* ---------- EQUIPAMENTOS ---------- */
+VIEWS.equipamentos = function(){
+  return `
+  <div class="section-intro">
+    <h2>Equipamentos & Investimento</h2>
+    <p>Equipamentos necessários para a linha de produção. A especificação técnica final será definida na <b style="color:var(--amber)">Fase 3</b> e a compra ocorre a partir de Out/2025.</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Máquina / Equipamento</th><th>Qtd</th><th>Custo Est.</th><th>Função</th><th>Status</th></tr></thead>
+      <tbody>
+        ${DB.equip.map(e=>`<tr>
+          <td style="font-weight:600">${e.m}</td>
+          <td class="mono">${e.q}</td>
+          <td class="mono" style="color:var(--petrol-700);font-weight:700">${e.c}</td>
+          <td style="color:var(--slate)">${e.o}</td>
+          <td><span class="st-pill" style="background:var(--line-soft);color:var(--slate)"><span class="d"></span>Planejado</span></td>
+        </tr>`).join('')}
+        <tr style="background:var(--paper)">
+          <td style="font-weight:800;font-family:'Sora'">TOTAL EQUIPAMENTOS</td><td></td>
+          <td class="mono" style="font-weight:800;color:var(--coral);font-size:15px">~R$ 378.000</td>
+          <td colspan="2" style="color:var(--slate-light);font-size:12.5px">+ infraestrutura, insumos, consultoria → ~R$ 655k total</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>`;
+};
+
+/* ---------- DOCUMENTOS ---------- */
+VIEWS.documentos = function(){
+  const stMap={ok:['Concluído','var(--green-soft)','var(--green)'],pend:['Pendente','var(--amber-soft)','#b8780a'],crit:['Crítico','var(--coral-soft)','var(--coral)']};
+  return `
+  <div class="section-intro">
+    <h2>Documentos Obrigatórios · Processo ADEO</h2>
+    <p>Conformidade exigida pelo processo de qualificação de fornecedores da ADEO (holding da Leroy Merlin): auditorias, contratos, seguros e validações de processo.</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Documento</th><th>Status</th><th>Data Limite</th></tr></thead>
+      <tbody>
+        ${DB.docs.map(d=>{
+          const [lbl,bg,co]=stMap[d.st];
+          return `<tr ${d.st==='crit'?'style="background:var(--amber-soft)"':''}>
+            <td style="font-weight:600">${d.d}</td>
+            <td><span class="st-pill" style="background:${bg};color:${co}"><span class="d"></span>${lbl}</span></td>
+            <td class="mono" style="font-size:12.5px">${d.dt}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+};
+
+/* ---------- FUTURE MODULES ---------- */
+function futureModule(icon,iconBg,iconCo,title,desc,feats){
+  return `
+  <div class="section-intro">
+    <h2>${title}</h2>
+    <p>${desc}</p>
+  </div>
+  <div class="future-card" style="max-width:560px;margin:0 auto;text-align:left">
+    <div style="display:flex;align-items:center;gap:18px;text-align:left">
+      <div class="fic" style="background:${iconBg};color:${iconCo};margin:0">${icon}</div>
+      <div>
+        <h3 style="margin-bottom:4px">Módulo ${title}</h3>
+        <span class="ftag">Em desenvolvimento · Fase 2 do sistema</span>
+      </div>
+    </div>
+    <ul class="future-feat">
+      ${feats.map(f=>`<li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${f}</li>`).join('')}
+    </ul>
+    <div style="margin-top:20px;padding:16px;background:var(--paper);border-radius:12px;font-size:13px;color:var(--slate);line-height:1.5">
+      <b style="color:var(--ink)">Visão integrada:</b> após a aprovação do planejamento, este sistema evolui para gestão operacional completa — conectando pedidos da Leroy Merlin, estoque de matéria-prima e produção em tempo real.
+    </div>
+  </div>`;
+}
+VIEWS.vendas = function(){
+  const vol=totalVolume(), rev=totalRevenue();
+  const ticket=Math.round(rev/vol);
+  const fmts=byFormat();
+  // top SKUs por faturamento
+  const topSkus=[...DB.skus].sort((a,b)=>skuRevenue(b)-skuRevenue(a)).slice(0,8);
+  const maxRev=skuRevenue(topSkus[0]);
+  const firstOrderTotal=DB.orders.reduce((a,o)=>a+o.qty,0);
+
+  const stMap={agendado:['Agendado','var(--amber-soft)','#b8780a'],producao:['Em produção','var(--teal-soft)','var(--petrol-700)'],entregue:['Entregue','var(--green-soft)','var(--green)']};
+
+  return `
+  <div class="section-intro" style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+    <div>
+      <h2>Vendas · Programa Anual Leroy Merlin</h2>
+      <p>23 referências de espelhos de banheiro · acabamento lapidado + kit de fixação · espessura 4mm. Protótipo do módulo de gestão de pedidos.</p>
+    </div>
+    <span class="ftag" style="font-size:11px;font-weight:700;color:var(--amber);background:var(--amber-soft);padding:6px 14px;border-radius:20px">PROTÓTIPO</span>
+  </div>
+
+  <div class="sales-grid">
+    <div class="kpi">
+      <div class="kic" style="background:var(--teal-soft);color:var(--petrol-700)"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 7l9 4 9-4" stroke="currentColor" stroke-width="1.7"/></svg></div>
+      <div class="kval">${vol.toLocaleString('pt-BR')}</div>
+      <div class="klbl">Volume anual (un)</div>
+    </div>
+    <div class="kpi">
+      <div class="kic" style="background:var(--green-soft);color:var(--green)"><svg viewBox="0 0 24 24" fill="none"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+      <div class="kval">${brlShort(rev)}</div>
+      <div class="klbl">Faturamento previsto/ano</div>
+    </div>
+    <div class="kpi">
+      <div class="kic" style="background:#e7eef7;color:#3a5e8c"><svg viewBox="0 0 24 24" fill="none"><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 6v12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg></div>
+      <div class="kval">${brl(ticket)}</div>
+      <div class="klbl">Ticket médio/un</div>
+    </div>
+    <div class="kpi">
+      <div class="kic" style="background:var(--coral-soft);color:var(--coral)"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+      <div class="kval">${firstOrderTotal.toLocaleString('pt-BR')}</div>
+      <div class="klbl">1º pedido · Fev/2027</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="panel">
+      <div class="panel-head"><h3>Mix por Formato</h3><span class="hint">volume anual</span></div>
+      <div class="donut-wrap">
+        ${donut(fmts.map(f=>({value:f.qty,color:f.color})), vol, '23', 'SKUs')}
+        <div class="donut-legend">
+          ${fmts.map(f=>`<div class="dl">
+            <i style="background:${f.color}"></i>
+            <span class="dlt">${f.fmt}</span>
+            <span class="dlv">${Math.round(f.qty/vol*100)}%</span>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Top SKUs por Faturamento</h3><span class="hint">previsão anual</span></div>
+      <div class="hbar-list">
+        ${topSkus.map(s=>{
+          const r=skuRevenue(s);
+          return `<div class="hbar">
+            <span class="hbl" title="${s.cod}">${s.cod.replace('ESP-','')}</span>
+            <div class="hbt"><i data-w="${r/maxRev*100}" style="width:0%;background:${FMT_COLORS[s.fmt]}"></i></div>
+            <span class="hbv">${brlShort(r)}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>Pedidos Iniciais · Fevereiro 2027</h3><span class="hint">15.000 un em 3 lotes semanais</span></div>
+    <div class="tbl-wrap" style="border:none">
+      <table>
+        <thead><tr><th>Pedido</th><th>Lote</th><th>Janela de Entrega</th><th>Qtd</th><th>Status</th><th>Progresso</th></tr></thead>
+        <tbody>
+          ${DB.orders.map((o,oi)=>{
+            const [lbl,bg,co]=stMap[o.status];
+            return `<tr>
+              <td class="mono" style="font-weight:700;font-size:12.5px">${o.id}</td>
+              <td style="font-weight:600">${o.lote}</td>
+              <td style="color:var(--slate)">${o.data}</td>
+              <td class="mono">${o.qty.toLocaleString('pt-BR')}</td>
+              <td><span class="st-pill" style="background:${bg};color:${co}"><span class="d"></span>${lbl}</span></td>
+              <td style="width:160px">
+                <div style="display:flex;align-items:center;gap:9px">
+                  <div class="pbar" style="flex:1;max-width:90px"><i style="width:${o.prog}%;background:${progColor(o.prog)}"></i></div>
+                  <span class="mono" style="font-size:11.5px;font-weight:700;color:${progColor(o.prog)}">${o.prog}%</span>
+                  ${isAdmin()?`<button onclick="advanceOrder(${oi})" style="background:var(--teal-soft);border:none;border-radius:7px;width:26px;height:26px;cursor:pointer;color:var(--petrol-700);font-size:15px;display:grid;place-items:center" title="Avançar">+</button>`:''}
+                </div>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+    ${isAdmin()?`<p style="font-size:12px;color:var(--slate-light);margin-top:12px">💡 Clique no <b>+</b> para simular o avanço da produção de cada lote (protótipo).</p>`:''}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h3>Catálogo · 23 Referências</h3>
+      <input class="sku-search" placeholder="Buscar SKU, formato ou dimensão..." oninput="filterSkus(this.value)">
+    </div>
+    <div class="tbl-wrap" style="border:none">
+      <table id="skuTable">
+        <thead><tr><th>Código SKU</th><th>Formato</th><th>Dimensão</th><th>Preço Un.</th><th>Qtd/Ano</th><th>Faturamento/Ano</th></tr></thead>
+        <tbody>
+          ${DB.skus.map(s=>`<tr class="sku-row" data-search="${(s.cod+' '+s.fmt+' '+s.dim).toLowerCase()}">
+            <td class="mono" style="font-weight:700;font-size:12px">${s.cod}</td>
+            <td><span class="fmt-tag" style="background:${FMT_COLORS[s.fmt]}">${s.fmt}</span></td>
+            <td>${s.dim}</td>
+            <td class="mono">${brl(s.price)}</td>
+            <td class="mono">${s.qty.toLocaleString('pt-BR')}</td>
+            <td class="mono" style="font-weight:700;color:var(--petrol-700)">${brl(skuRevenue(s))}</td>
+          </tr>`).join('')}
+          <tr style="background:var(--paper)">
+            <td colspan="4" style="font-weight:800;font-family:'Sora'">TOTAL · 23 SKUs</td>
+            <td class="mono" style="font-weight:800">${vol.toLocaleString('pt-BR')}</td>
+            <td class="mono" style="font-weight:800;color:var(--green);font-size:14px">${brlShort(rev)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  `;
+};
+function advanceOrder(i){
+  if(!isAdmin()){ toast('Apenas Cristal Sete pode editar'); return; }
+  const o=DB.orders[i];
+  o.prog=Math.min(100,o.prog+25);
+  if(o.prog>=100){ o.status='entregue'; }
+  else if(o.prog>0){ o.status='producao'; }
+  saveDB(); render('vendas'); toast(o.prog>=100?'Lote entregue ✓':'Produção avançada · '+o.prog+'%');
+}
+function filterSkus(q){
+  q=q.toLowerCase().trim();
+  document.querySelectorAll('#skuTable .sku-row').forEach(r=>{
+    r.style.display = r.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+VIEWS.estoque = ()=>futureModule(
+  `<svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 7l9 4 9-4M12 11v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  'var(--amber-soft)','#b8780a','Estoque',
+  'Controle de matéria-prima (vidro float, prata/silvering, adesivos, acessórios, embalagem) e de produtos acabados.',
+  ['Controle de vidro float (4mm) e insumos','Gestão de acessórios de colagem','Estoque de produtos acabados por SKU','Alertas de reposição automática','Rastreabilidade de lotes (exigência ADEO)']
+);
+VIEWS.producao = ()=>futureModule(
+  `<svg viewBox="0 0 24 24" fill="none"><path d="M2 20h20M4 20V9l5 3V9l5 3V9l5 3v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  'var(--coral-soft)','var(--coral)','Produção',
+  'Acompanhamento da linha de produção em tempo real: corte, lapidação, silvering, colagem, embalagem e paletização.',
+  ['Ordens de produção por SKU','Monitoramento de cada estação (corte → paletização)','Controle de capacidade (meta: 1.000/dia)','Indicadores de qualidade e não-conformidades','SPM — relatório semanal automático para ADEO']
+);
+
+/* ============ INIT ============ */
+// Pré-carrega DB para o caso de abrir direto (mas só mostra após login)
+loadDB();
+</script>
+</body>
+</html>
