@@ -50,17 +50,12 @@ h1,h2,h3,h4,h5{font-family:'Inter',sans-serif;letter-spacing:-.01em}
   position:fixed;inset:0;z-index:1000;
   display:flex;align-items:center;justify-content:center;
   background:
-    radial-gradient(900px 600px at 15% 10%, rgba(74,127,193,.18), transparent 60%),
-    radial-gradient(800px 500px at 85% 90%, rgba(30,58,95,.35), transparent 55%),
-    linear-gradient(135deg,var(--petrol-900),var(--petrol-700));
+    linear-gradient(rgba(5,15,35,.5), rgba(5,15,35,.5)),
+    url('assets/images/login-bg.jpg') center/cover no-repeat;
   overflow:hidden;
 }
 #login::before{
-  content:"";position:absolute;inset:0;
-  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(circle at 50% 50%, black, transparent 75%);
-}
+#login::before{content:none}
 .login-card{
   position:relative;
   width:min(440px,92vw);
