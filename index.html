@@ -71,6 +71,7 @@ h1,h2,h3,h4,h5{font-family:'Inter',sans-serif;letter-spacing:-.01em}
   animation:rise .7s cubic-bezier(.16,1,.3,1);
 }
 @keyframes rise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 .logo-badge{
   display:flex;align-items:center;gap:13px;margin-bottom:6px;
 }
@@ -106,6 +107,30 @@ h1,h2,h3,h4,h5{font-family:'Inter',sans-serif;letter-spacing:-.01em}
 .profile-opt .arrow{margin-left:auto;color:var(--slate-light);transition:.25s}
 .profile-opt:hover .arrow{color:var(--teal);transform:translateX(3px)}
 .login-foot{margin-top:18px;text-align:center;font-size:12px;color:var(--slate-light)}
+
+/* ── Formulário de login (passo 2) ── */
+.login-form-header{display:flex;align-items:center;gap:14px;padding:16px;background:var(--paper);border-radius:14px;margin-bottom:22px;border:1px solid var(--line)}
+.login-form-logo{width:46px;height:46px;border-radius:12px;overflow:hidden;background:#fff;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.1);padding:4px}
+.login-form-logo img{width:100%;height:100%;object-fit:contain}
+.login-form-nome{font-family:'Inter';font-weight:700;font-size:15px;color:var(--ink);line-height:1.2}
+.login-form-sub{font-size:12px;color:var(--slate);margin-top:3px}
+.lf-field{margin-bottom:16px}
+.lf-field label{display:block;font-size:13px;font-weight:600;color:var(--petrol-700);margin-bottom:6px}
+.lf-field input{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:'Inter';font-size:14px;color:var(--ink);background:var(--white);transition:.2s;outline:none}
+.lf-field input:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+.lf-pass-wrap{position:relative}
+.lf-pass-wrap input{padding-right:44px}
+.lf-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--slate-light);cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;transition:.18s}
+.lf-eye:hover{color:var(--teal)}
+.lf-btn-entrar{width:100%;padding:13px;background:var(--petrol-600);color:#fff;border:none;border-radius:10px;font-family:'Inter';font-size:15px;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:10px}
+.lf-btn-entrar:hover{background:var(--petrol-700);transform:translateY(-1px);box-shadow:0 4px 12px rgba(43,95,166,.3)}
+.lf-btn-voltar{width:100%;padding:10px;background:none;color:var(--slate);border:1.5px solid var(--line);border-radius:10px;font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.lf-btn-voltar:hover{border-color:var(--petrol-600);color:var(--petrol-600)}
+#loginError{display:none!important}
+#loginError.show{display:block!important}
+/* Animação de entrada do formulário */
+@keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.slide-in{animation:slideIn .3s cubic-bezier(.16,1,.3,1)}
 
 /* ============ APP SHELL ============ */
 #app{display:none;height:100vh}
@@ -370,31 +395,68 @@ tbody tr:hover{background:var(--paper)}
 <!-- ============ LOGIN ============ -->
 <div id="login">
   <div class="login-card">
-    <div class="logo-badge">
+    <!-- Logo apenas (sem texto) -->
+    <div class="logo-badge" style="margin-bottom:20px">
       <div class="logo-mark" style="background:#fff;padding:5px"><img src="assets/logos/cristalsete.png" style="width:100%;height:100%;object-fit:contain" alt="Cristal Sete"></div>
-      <div class="logo-text">
-        <b>Cristal Sete</b>
-        <span>Sistema de Gestão de Projeto</span>
-      </div>
     </div>
-    <p class="login-title">Bem-vindo de volta</p>
-    <h2>Projeto Espelhos<br>Leroy Merlin</h2>
-    <button class="profile-opt c7" onclick="login('c7')">
-      <div class="ic" style="background:#fff;padding:5px;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="assets/logos/cristalsete.png" style="width:100%;height:100%;object-fit:contain" alt="Cristal Sete"></div>
-      <div>
-        <b>Cristal Sete · Administrador</b>
-        <small>Gerenciar e editar todo o projeto</small>
+
+    <!-- PASSO 1: Seleção de perfil -->
+    <div id="stepPerfil">
+      <p class="login-title">Bem-vindo de volta</p>
+      <h2 style="margin-bottom:22px">Projeto Espelhos<br>Leroy Merlin</h2>
+      <button class="profile-opt c7" onclick="showLoginForm('c7')">
+        <div class="ic" style="background:#fff;padding:5px;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="assets/logos/cristalsete.png" style="width:100%;height:100%;object-fit:contain" alt="Cristal Sete"></div>
+        <div>
+          <b>Cristal Sete · Administrador</b>
+          <small>Gerenciar e editar todo o projeto</small>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+      <button class="profile-opt lm" onclick="showLoginForm('lm')">
+        <div class="ic" style="background:#fff;padding:4px;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="assets/logos/leroymerlin.png" style="width:100%;height:100%;object-fit:contain" alt="Leroy Merlin"></div>
+        <div>
+          <b>Leroy Merlin · Acompanhamento</b>
+          <small>Visualizar progresso e relatórios</small>
+        </div>
+        <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+    </div>
+
+    <!-- PASSO 2: Formulário de login -->
+    <div id="stepLogin" style="display:none">
+      <div class="login-form-header">
+        <div class="login-form-logo" id="formLogo"></div>
+        <div>
+          <div class="login-form-nome" id="formNome"></div>
+          <div class="login-form-sub" id="formSub"></div>
+        </div>
       </div>
-      <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </button>
-    <button class="profile-opt lm" onclick="login('lm')">
-      <div class="ic" style="background:#fff;padding:4px;box-shadow:0 1px 4px rgba(0,0,0,.1)"><img src="assets/logos/leroymerlin.png" style="width:100%;height:100%;object-fit:contain" alt="Leroy Merlin"></div>
-      <div>
-        <b>Leroy Merlin · Acompanhamento</b>
-        <small>Visualizar progresso e relatórios</small>
+      <div class="lf-field">
+        <label for="loginUser">E-mail</label>
+        <input type="email" id="loginUser" placeholder="Digite seu e-mail" autocomplete="email" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
       </div>
-      <span class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    </button>
+      <div class="lf-field">
+        <label for="loginPass">Senha</label>
+        <div class="lf-pass-wrap">
+          <input type="password" id="loginPass" placeholder="Digite sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+          <button type="button" class="lf-eye" onclick="togglePass()" tabindex="-1" title="Mostrar/ocultar senha">
+            <svg id="eyeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="loginError" style="display:none;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:12px;display:none">
+        Usuário ou senha incorretos.
+      </div>
+      <button class="lf-btn-entrar" onclick="doLogin()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Entrar
+      </button>
+      <button class="lf-btn-voltar" onclick="backToPerfil()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Voltar
+      </button>
+    </div>
+
     <p class="login-foot">Cristal Sete · Apucarana/PR — Fornecimento ADEO</p>
   </div>
 </div>
@@ -677,23 +739,131 @@ function resetDB(){
   }
 }
 
-/* ============ AUTH ============ */
-function login(profile){
-  USER = profile==='c7'
-    ? {role:'admin',name:'Angelo',org:'Cristal Sete',avatar:'A',color:'#1aa3a3'}
-    : {role:'view',name:'Luiz',org:'Leroy Merlin',avatar:'L',color:'#f2a30a'};
+/* ============================================================
+   CREDENCIAIS DE ACESSO
+   Para adicionar ou alterar: edite os itens abaixo.
+   Cada perfil aceita múltiplos usuários.
+   ============================================================ */
+const CREDENTIALS = {
+  c7: [
+    { email: 'mauricio.silva@cristalsete.com.br', pass: 'cristal2026', name: 'Mauricio Vieira da Silva',       avatar: 'M' },
+    { email: 'angelo@cristalsete.com.br',          pass: 'cristal2026', name: 'Angelo Gracioli',               avatar: 'A' }
+  ],
+  lm: [
+    { email: 'lrudge@leroymerlin.com.br',          pass: 'leroy2026',   name: 'Luiz Henrique Simonsen Rudge', avatar: 'L' }
+  ]
+};
+
+const PROFILES = {
+  c7: {
+    role:'admin', name:'Angelo', org:'Cristal Sete',
+    avatar:'A', color:'#EEF3FB', colorText:'var(--petrol-600)',
+    label:'Cristal Sete · Administrador',
+    sub:'Modo Administrador',
+    logo:'assets/logos/cristalsete.png'
+  },
+  lm: {
+    role:'view', name:'Luiz', org:'Leroy Merlin',
+    avatar:'L', color:'var(--amber-soft)', colorText:'#9a6500',
+    label:'Leroy Merlin · Acompanhamento',
+    sub:'Modo Visualização',
+    logo:'assets/logos/leroymerlin.png'
+  }
+};
+
+let currentProfile = null;
+
+/* ── Passo 1 → 2: mostrar formulário ── */
+function showLoginForm(profile){
+  currentProfile = profile;
+  const p = PROFILES[profile];
+
+  // Preencher cabeçalho do formulário
+  document.getElementById('formLogo').innerHTML =
+    `<img src="${p.logo}" style="width:100%;height:100%;object-fit:contain" alt="${p.org}">`;
+  document.getElementById('formNome').textContent = p.label;
+  document.getElementById('formSub').textContent  = p.sub;
+
+  // Limpar campos e erro
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').classList.remove('show');
+
+  // Transição
+  document.getElementById('stepPerfil').style.display = 'none';
+  const step2 = document.getElementById('stepLogin');
+  step2.style.display = 'block';
+  step2.classList.add('slide-in');
+  setTimeout(()=> step2.classList.remove('slide-in'), 350);
+  setTimeout(()=> document.getElementById('loginUser').focus(), 100);
+}
+
+/* ── Passo 2 → 1: voltar ── */
+function backToPerfil(){
+  document.getElementById('stepLogin').style.display = 'none';
+  const step1 = document.getElementById('stepPerfil');
+  step1.style.display = 'block';
+  step1.classList.add('slide-in');
+  setTimeout(()=> step1.classList.remove('slide-in'), 350);
+  currentProfile = null;
+}
+
+/* ── Validar e entrar ── */
+function doLogin(){
+  const email = document.getElementById('loginUser').value.trim().toLowerCase();
+  const pass  = document.getElementById('loginPass').value;
+  const users = CREDENTIALS[currentProfile];
+  const errEl = document.getElementById('loginError');
+
+  const found = users.find(u => u.email === email && u.pass === pass);
+
+  if(found){
+    errEl.classList.remove('show');
+    login(currentProfile, found);
+  } else {
+    errEl.classList.add('show');
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+    const card = document.querySelector('.login-card');
+    card.style.animation = 'shake .4s ease';
+    setTimeout(()=> card.style.animation = '', 400);
+  }
+}
+
+/* ── Mostrar/ocultar senha ── */
+function togglePass(){
+  const input = document.getElementById('loginPass');
+  const icon  = document.getElementById('eyeIcon');
+  if(input.type === 'password'){
+    input.type = 'text';
+    icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
+  } else {
+    input.type = 'password';
+    icon.innerHTML = '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>';
+  }
+}
+
+/* ── AUTH ── */
+function login(profile, foundUser){
+  const isAdminRole = profile === 'c7';
+  USER = {
+    role:      isAdminRole ? 'admin' : 'view',
+    name:      foundUser.name,
+    org:       isAdminRole ? 'Cristal Sete' : 'Leroy Merlin',
+    avatar:    foundUser.avatar,
+    color:     isAdminRole ? '#EEF3FB' : 'var(--amber-soft)'
+  };
   document.getElementById('login').style.display='none';
   document.getElementById('app').style.display='block';
-  // setup user UI
   document.getElementById('sbName').textContent = USER.name;
   document.getElementById('sbRole').textContent = USER.org;
   const av = document.getElementById('sbAvatar');
   av.textContent = USER.avatar;
-  av.style.background = USER.role==='admin' ? 'var(--teal-soft)' : 'var(--amber-soft)';
-  av.style.color = USER.role==='admin' ? 'var(--petrol-700)' : '#9a6500';
+  av.style.background = isAdminRole ? 'var(--teal-soft)' : 'var(--amber-soft)';
+  av.style.color = isAdminRole ? 'var(--petrol-700)' : '#9a6500';
   const pill = document.getElementById('rolePill');
   const ptxt = document.getElementById('rolePillTxt');
-  if(USER.role==='admin'){ pill.className='role-pill admin'; ptxt.textContent='Cristal Sete · Modo Edição'; }
+  if(isAdminRole){ pill.className='role-pill admin'; ptxt.textContent='Cristal Sete · Modo Edição'; }
   else { pill.className='role-pill view'; ptxt.textContent='Leroy Merlin · Visualização'; }
   loadDB();
   render('dashboard');
